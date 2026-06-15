@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BA Self-Assessment — Increment Review</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-900: #042C53;
+    --blue-800: #0C447C;
+    --blue-600: #185FA5;
+    --blue-400: #378ADD;
+    --blue-200: #85B7EB;
+    --blue-100: #B5D4F4;
+    --blue-50: #E6F1FB;
+    --teal-600: #0F6E56;
+    --teal-400: #1D9E75;
+    --teal-100: #9FE1CB;
+    --teal-50: #E1F5EE;
+    --purple-600: #534AB7;
+    --purple-400: #7F77DD;
+    --purple-50: #EEEDFE;
+    --gray-900: #2C2C2A;
+    --gray-600: #5F5E5A;
+    --gray-200: #B4B2A9;
+    --gray-100: #D3D1C7;
+    --gray-50: #F1EFE8;
+    --amber-400: #BA7517;
+    --amber-50: #FAEEDA;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0a0f1e;
+    color: #e8edf5;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(10, 15, 30, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(55, 138, 221, 0.15);
+  }
+  .nav-logo { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: var(--blue-400); letter-spacing: 0.05em; }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { font-size: 0.8rem; color: rgba(232,237,245,0.6); text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--blue-400); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(55,138,221,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--blue-400); margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800;
+    line-height: 1.05; letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #ffffff 0%, var(--blue-200) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-sub {
+    font-size: 1.05rem; color: rgba(232,237,245,0.55); max-width: 480px; line-height: 1.7;
+    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--blue-400); }
+  .hero-stat-label { font-size: 0.75rem; color: rgba(232,237,245,0.45); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.25rem; }
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: rgba(232,237,245,0.3); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    animation: bounce 2s infinite;
+  }
+  .scroll-hint::after { content: '↓'; font-size: 1rem; }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; max-width: 860px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--blue-400); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700;
+    margin-bottom: 2.5rem; color: #fff;
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(55,138,221,0.3), transparent);
+    margin: 0 auto;
+  }
+
+  /* Q CARD */
+  .q-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(55,138,221,0.12);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .q-card.visible { opacity: 1; transform: translateY(0); }
+  .q-card:hover { border-color: rgba(55,138,221,0.3); background: rgba(255,255,255,0.05); }
+
+  .q-number {
+    font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--blue-400); margin-bottom: 0.5rem;
+  }
+  .q-question {
+    font-size: 0.85rem; color: rgba(232,237,245,0.45); margin-bottom: 1rem; line-height: 1.5;
+    font-style: italic;
+  }
+  .q-answer { font-size: 0.95rem; color: rgba(232,237,245,0.85); line-height: 1.8; }
+  .q-answer ul { list-style: none; padding: 0; }
+  .q-answer ul li { padding: 0.3rem 0 0.3rem 1.25rem; position: relative; }
+  .q-answer ul li::before { content: '→'; position: absolute; left: 0; color: var(--blue-400); font-size: 0.8rem; top: 0.35rem; }
+  .q-answer strong { color: #fff; font-weight: 500; }
+
+  /* PERF TABLE */
+  .perf-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: rgba(55,138,221,0.1); border-radius: 12px; overflow: hidden;
+    border: 1px solid rgba(55,138,221,0.12);
+  }
+  .perf-cell {
+    background: rgba(10,15,30,0.9); padding: 1rem 1.25rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .perf-cell:hover { background: rgba(255,255,255,0.04); }
+  .perf-metric { font-size: 0.85rem; color: rgba(232,237,245,0.6); }
+  .perf-value { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--blue-400); }
+
+  /* RATINGS */
+  .ratings-grid { display: flex; flex-direction: column; gap: 0.75rem; }
+  .rating-row {
+    display: flex; align-items: center; gap: 1rem;
+    opacity: 0; transform: translateX(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .rating-row.visible { opacity: 1; transform: translateX(0); }
+  .rating-label { font-size: 0.85rem; color: rgba(232,237,245,0.7); flex: 1; min-width: 0; }
+  .rating-bar-wrap { width: 180px; height: 6px; background: rgba(255,255,255,0.08); border-radius: 99px; flex-shrink: 0; overflow: hidden; }
+  .rating-bar { height: 100%; background: var(--blue-400); border-radius: 99px; width: 0; transition: width 1s cubic-bezier(.16,1,.3,1); }
+  .rating-num { font-size: 0.85rem; font-weight: 600; color: var(--blue-400); width: 2rem; text-align: right; flex-shrink: 0; }
+
+  /* HIGHLIGHTS */
+  .highlight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .highlight-card {
+    background: rgba(55,138,221,0.06); border: 1px solid rgba(55,138,221,0.15);
+    border-radius: 12px; padding: 1.5rem;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .highlight-card.visible { opacity: 1; transform: translateY(0); }
+  .highlight-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .highlight-title { font-size: 0.85rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+  .highlight-text { font-size: 0.8rem; color: rgba(232,237,245,0.55); line-height: 1.6; }
+
+  /* CTC BANNER */
+  .ctc-banner {
+    background: linear-gradient(135deg, rgba(55,138,221,0.15) 0%, rgba(29,158,117,0.1) 100%);
+    border: 1px solid rgba(55,138,221,0.25);
+    border-radius: 16px; padding: 3rem 2rem; text-align: center;
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .ctc-banner.visible { opacity: 1; transform: translateY(0); }
+  .ctc-amount { font-family: 'Syne', sans-serif; font-size: 3.5rem; font-weight: 800; color: var(--teal-400); }
+  .ctc-label { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,237,245,0.45); margin-bottom: 0.5rem; }
+  .ctc-note { margin-top: 1rem; font-size: 0.9rem; color: rgba(232,237,245,0.6); max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 3rem 2rem;
+    color: rgba(232,237,245,0.25); font-size: 0.75rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  @media (max-width: 600px) {
+    .hero-stats { gap: 1.5rem; }
+    .highlight-grid { grid-template-columns: 1fr; }
+    .perf-grid { grid-template-columns: 1fr; }
+    .rating-bar-wrap { width: 100px; }
+    nav { padding: 0.75rem 1rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Deep · BA Self-Assessment</div>
+  <div class="nav-links">
+    <a href="#performance">Performance</a>
+    <a href="#skills">Skills</a>
+    <a href="#feedback">Feedback</a>
+    <a href="#increment">Increment</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Increment Review · 2025</div>
+  <h1 class="hero-title">Business Analyst<br>Self-Assessment</h1>
+  <p class="hero-sub">A full account of responsibilities, achievements, skills, and growth over the past year.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">80+</div>
+      <div class="hero-stat-label">Projects handled</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">15</div>
+      <div class="hero-stat-label">Daily clients</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">₹12.75L</div>
+      <div class="hero-stat-label">Project secured</div>
+    </div>
+  </div>
+  <div class="scroll-hint">scroll</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION A -->
+<section id="performance">
+  <div class="section-label">Section A</div>
+  <div class="section-title">Business Analysis Performance</div>
+
+  <div class="q-card">
+    <div class="q-number">Q1</div>
+    <div class="q-question">Describe your key responsibilities in your Business Analyst role.</div>
+    <div class="q-answer">
+      <p style="margin-bottom:1rem;">As a Business Analyst, my core responsibilities span the full requirement-to-delivery lifecycle. I conduct requirement gathering through stakeholder meetings, document the requirements, and share them with the client for confirmation. I then perform market research to validate whether competitors offer similar features, feed these insights into technical discussions, and prepare quotations for the sales team. On a daily basis, I maintain active communication with 10–15 clients and share timely updates via WhatsApp groups.</p>
+      <ul>
+        <li>Conduct UAT for developed features</li>
+        <li>Assign tasks to the team</li>
+        <li>Mentor junior/new BAs, support and implementation teams</li>
+        <li>Manage follow-ups and handle unscheduled client escalations</li>
+        <li>Create project-specific documentation</li>
+        <li>Coordinate with external vendors and third-party service providers</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Q2</div>
+    <div class="q-question">Share your performance data for the past 6–12 months.</div>
+    <div class="q-answer">
+      <div class="perf-grid" style="margin-top:0.5rem;">
+        <div class="perf-cell"><span class="perf-metric">Projects Handled</span><span class="perf-value">50–80</span></div>
+        <div class="perf-cell"><span class="perf-metric">Requirements Documented</span><span class="perf-value">50–80</span></div>
+        <div class="perf-cell"><span class="perf-metric">Client Meetings Conducted</span><span class="perf-value">50–80</span></div>
+        <div class="perf-cell"><span class="perf-metric">Change Requests Managed</span><span class="perf-value">20–40</span></div>
+        <div class="perf-cell"><span class="perf-metric">UAT Cycles Supported</span><span class="perf-value">40–45</span></div>
+        <div class="perf-cell"><span class="perf-metric">Process Improvements</span><span class="perf-value">10–20</span></div>
+        <div class="perf-cell"><span class="perf-metric">Stakeholder Satisfaction</span><span class="perf-value">~80–100%</span></div>
+        <div class="perf-cell"><span class="perf-metric">Delivery Success Rate</span><span class="perf-value">90–100%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Q3</div>
+    <div class="q-question">Highlight key achievements or project milestones you are proud of.</div>
+    <div class="q-answer">
+      <div class="highlight-grid">
+        <div class="highlight-card">
+          <div class="highlight-icon">🧩</div>
+          <div class="highlight-title">Solo Department Management</div>
+          <div class="highlight-text">Managed the entire BA department single-handedly for 3 consecutive months as the only Junior BA — with no formal handover, learning everything independently.</div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-icon">💼</div>
+          <div class="highlight-title">₹12.75L Project Secured</div>
+          <div class="highlight-text">Secured and delivered a Lab Management System project worth ₹12.75 Lakhs with healthy margins — result of 2 months of dedicated client and requirement work.</div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-icon">📲</div>
+          <div class="highlight-title">15 Clients Daily</div>
+          <div class="highlight-text">Consistently managing daily communication and updates for 10–15 clients simultaneously, ensuring no client feels unattended.</div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-icon">⭐</div>
+          <div class="highlight-title">Best Employee Award</div>
+          <div class="highlight-text">Received Best Employee of the Month recognition at AscendumKPS — a reflection of consistent effort and output quality.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Q4</div>
+    <div class="q-question">Mention any new processes, improvements, or initiatives you introduced.</div>
+    <div class="q-answer">I replaced the post-meeting MoM process with a structured <strong>email confirmation system</strong>, making client sign-offs faster, more trackable, and easier to reference.</div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Q5</div>
+    <div class="q-question">Rate yourself (1–5) on key BA competencies.</div>
+    <div class="q-answer">
+      <div class="ratings-grid" style="margin-top:0.75rem;" id="ratings">
+        <div class="rating-row"><span class="rating-label">Requirement Gathering & Analysis</span><div class="rating-bar-wrap"><div class="rating-bar" data-val="5"></div></div><span class="rating-num">5</span></div>
+        <div class="rating-row"><span class="rating-label">Documentation Quality</span><div class="rating-bar-wrap"><div class="rating-bar" data-val="5"></div></div><span class="rating-num">5</span></div>
+        <div class="rating-row"><span class="rating-label">Communication & Stakeholder Management</span><div class="rating-bar-wrap"><div class="rating-bar" data-val="4.5"></div></div><span class="rating-num">4.5</span></div>
+        <div class="rating-row"><span class="rating-label">Problem Solving & Critical Thinking</span><div class="rating-bar-wrap"><div class="rating-bar" data-val="5"></div></div><span class="rating-num">5</span></div>
+        <div class="rating-row"><span class="rating-label">Process Improvement & Innovation</span><div class="rating-bar-wrap"><div class="rating-bar" data-val="4.5"></div></div><span class="rating-num">4.5</span></div>
+        <div class="rating-row"><span class="rating-label">Team Collaboration</span><div class="rating-bar-wrap"><div class="rating-bar" data-val="5"></div></div><span class="rating-num">5</span></div>
+        <div class="rating-row"><span class="rating-label">Analytical & Reporting Skills</span><div class="rating-bar-wrap"><div class="rating-bar" data-val="4.5"></div></div><span class="rating-num">4.5</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION B -->
+<section id="skills">
+  <div class="section-label">Section B</div>
+  <div class="section-title">Skills & Development</div>
+
+  <div class="q-card">
+    <div class="q-number">Q6</div>
+    <div class="q-question">What BA skills, tools, or certifications have you improved or learned recently?</div>
+    <div class="q-answer">
+      <ul>
+        <li><strong>Skills:</strong> Documentation, Communication, Brainstorming & Questioning, Technical Understanding of System Structure, Cross-team Coordination</li>
+        <li><strong>Tools:</strong> AI (LLM-based), Jira, Google Workspace with AI</li>
+        <li><strong>Certifications:</strong> Power BI, Figma</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Q7</div>
+    <div class="q-question">Did you participate in any training programs, workshops, certifications, or projects?</div>
+    <div class="q-answer">
+      <ul>
+        <li><strong>Background:</strong> Technical education in UI/UX & Java development built a strong foundation for understanding system architecture, user-friendly design, research, and documentation — and shaped a problem-solving mindset.</li>
+        <li><strong>Certifications:</strong> UI/UX Developer, Java Developer, Best Employee of the Month @ AscendumKPS</li>
+        <li><strong>Workshop:</strong> Power BI</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Q8</div>
+    <div class="q-question">What are the top 2–3 areas where you wish to improve over the next year?</div>
+    <div class="q-answer">
+      <ul>
+        <li><strong>Technical Knowledge:</strong> Deepen understanding of the tech team's work to contribute more efficiently in solution discussions.</li>
+        <li><strong>Communication:</strong> Further refine stakeholder and cross-team communication for clarity and impact.</li>
+        <li><strong>Tools:</strong> Strengthen proficiency in Jira and AI-based tools for more effective project management.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION C -->
+<section id="feedback">
+  <div class="section-label">Section C</div>
+  <div class="section-title">Feedback & Expectations</div>
+
+  <div class="q-card">
+    <div class="q-number">Q9</div>
+    <div class="q-question">What challenges do you face in your role that affect performance?</div>
+    <div class="q-answer">
+      <ul>
+        <li><strong>Resource Allocation:</strong> Limited resources in the BA department affect bandwidth and output quality.</li>
+        <li><strong>Sales Team Commitments:</strong> False or unverified commitments to clients create expectation mismatches that the BA has to manage.</li>
+        <li><strong>Product Knowledge Gaps:</strong> Implementation and support teams lack sufficient product knowledge, increasing dependency on BA.</li>
+        <li><strong>No Fixed Workflow:</strong> Absence of a standardized workflow leads to inconsistency and inefficiency across projects.</li>
+        <li><strong>Internal Process Follow-ups:</strong> Frequently reminding the organization about basic processes — assets, system access, payroll, increment — that should be managed proactively.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Q10</div>
+    <div class="q-question">Do you have suggestions for improving BA processes, tools, or strategies?</div>
+    <div class="q-answer">
+      <ul>
+        <li><strong>Jira:</strong> Implement Jira for structured client and team communication to streamline project management.</li>
+        <li><strong>AI Tools:</strong> Adopt AI-based tools to enhance requirement process flows, diagrams, research, and documentation quality.</li>
+        <li><strong>Strategy 1:</strong> Support and Implementation teams should be the primary client contact; BA looped in only when a requirement arises.</li>
+        <li><strong>Strategy 2:</strong> Shift from reactive client-driven development to a product vision-led approach — requirements considered but released only after thorough research, analysis, and development.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Q12</div>
+    <div class="q-question">Where do you see yourself growing within the company in the next 1–2 years?</div>
+    <div class="q-answer">I see myself growing into a <strong>Senior Business Analyst or Business Analyst Lead</strong> role within the next 1–2 years, taking on greater responsibilities in strategy, team leadership, and project ownership.</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- INCREMENT -->
+<section id="increment">
+  <div class="section-label">Section C · Q11</div>
+  <div class="section-title">Increment Expectation</div>
+
+  <div class="ctc-banner">
+    <div class="ctc-label">Expected CTC</div>
+    <div class="ctc-amount">6.0 LPA</div>
+    <p class="ctc-note">I expect my compensation to be aligned with other leaders at the same level within the organization. Since joining, I have consistently performed at a high standard — managing the BA department independently, securing significant projects, mentoring team members, and driving process improvements — with no lack of effort or ownership from my side.</p>
+  </div>
+</section>
+
+<footer>
+  Business Analyst Self-Assessment · Increment Review 2025
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      if (entry.target.classList.contains('rating-row')) {
+        const bar = entry.target.querySelector('.rating-bar');
+        if (bar) {
+          const val = parseFloat(bar.dataset.val);
+          setTimeout(() => { bar.style.width = (val / 5 * 100) + '%'; }, 100);
+        }
+      }
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.q-card, .highlight-card, .rating-row, .ctc-banner').forEach((el, i) => {
+  if (el.classList.contains('rating-row')) {
+    el.style.transitionDelay = (i % 7 * 0.08) + 's';
+  }
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
